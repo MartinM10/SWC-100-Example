@@ -316,7 +316,7 @@ function _sendPrize(address payable _winner, uint256 _prize) public {
 ## Posible solución ✍️
 
 Si analizamos el código detenidamente podemos observar que esta función se llama desde otra función endLottery. Además hay una pequeña pista que se ha introducido en el código que es el nombre de la función `_sendPrize`, nombre que comienza por `_`. Esto nos debería indicar que se trata de una función `internal`. Esta sería una posible solución a esa posible explotación, indicar que la función debe ser `internal`. Esto implicaría que esta función solo puede ser llamada desde dentro del contrato por otra función, e impidiendo que sea llamada y se ejecute desde fuera del contrato.  
-En este repositorio se proporciona el código del smart contract con la posible solución mencionada [LotterySolution]
+En este repositorio se proporciona el código del smart contract con la posible solución mencionada [LotterySolution.sol](src/LotterySolution.sol)
 
 > [!TIP]
 > Además, sería recomendable crear un mecanismo de control de acceso para esta función si es necesario, como permitir que solo el propietario del contrato la llame.
