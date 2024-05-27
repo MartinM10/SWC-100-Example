@@ -168,14 +168,15 @@ function startLottery(uint256 _ticketPrice) external onlyOwner {
 
 ```solidity
 function buyTicket(uint256 _lotteryId) external payable lotteryActive(_lotteryId) onlyOneTicketPerAccount(_lotteryId) {
-    require(msg.value == lotteries[_lotteryId].ticketPrice, "Incorrect ticket price");
-    Lottery storage lottery = lotteries[_lotteryId];
-    lottery.players.push(payable(msg.sender));
-    lottery.prizePool += msg.value;
-    lottery.hasTicket[msg.sender] = true;
+        require(!lotteries[_lotteryId].hasTicket[msg.sender], "Only one ticket per account allowed");
+        require(msg.value == lotteries[_lotteryId].ticketPrice, "Incorrect ticket price");
+        Lottery storage lottery = lotteries[_lotteryId];
+        lottery.players.push(payable(msg.sender));
+        lottery.prizePool += msg.value;
+        lottery.hasTicket[msg.sender] = true;
 
-    emit TicketPurchased(_lotteryId, msg.sender, msg.value);
-}
+        emit TicketPurchased(_lotteryId, msg.sender, msg.value);
+    }
 ```
 
 - Propósito: Permite a los usuarios comprar un boleto para una lotería específica. ✅
