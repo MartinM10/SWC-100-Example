@@ -2,14 +2,15 @@
 
 ## Tabla de Contenidos
 
-- [Introducción a la Seguridad en Web3 🛡️](#introducción-a-la-seguridad-en-web3)
-- [Requisitos](#requisitos-)
+- [Introducción a la Seguridad en Web3 🛡️](#introducción-a-la-seguridad-en-web3-️)
+- [Requisitos](#requisitos-️)
   - [IDE](#ide)
   - [Foundry](#foundry)
   - [Primeros Pasos](#primeros-pasos)
 - [Descripción del Smart Contract](#descripción-del-smart-contract-)
-  - [Estructura del Smart Contract](#estructura-del-smart-contract-)
+  - [Estructura del Smart Contract](#estructura-del-smart-contract-️)
   - [Explicación Detallada de las Funciones](#explicación-detallada-de-las-funciones-)
+  - [Diagrama del Smart Contract](#diagrama-del-smart-contract)
 - [Pruebas y Seguridad](#pruebas-y-seguridad-)
   - [Casos de Prueba](#casos-de-prueba-)
 - [Vulnerabilidad Intencional](#vulnerabilidad-intencional-)
@@ -209,13 +210,23 @@ function endLottery(uint256 _lotteryId) external onlyOwner lotteryActive(_lotter
 
 ### Diagrama del Smart Contract
 
-A continuación se muestra un diagrama que muestra el funcionamiento del smart contract de manera visual. Generado con [draw.io](https://app.diagrams.net/)
+A continuación se muestra un diagrama que muestra el funcionamiento más destacable del smart contract de manera visual. Generado con [draw.io](https://app.diagrams.net/)
 
 ![Diagrama_01](/resources/LotteryDiagram.png)
 
 ## Pruebas y Seguridad 🧪
 
 ### Casos de Prueba 📑
+
+> [!NOTE]
+> Para la ejecución de los test automatizados debes haber realizado previamente los [Primeros Pasos](#primeros-pasos). Una vez hayamos instalado foundry y compilado el proyecto se pueden ejecutar los tests con el siguiente comando
+
+```shell
+forge test --match-contract Lottery
+```
+
+Tras ejecutar el comando deberías ver que todos los tests se han pasado correctamente
+![TestPassed_01](/resources/TestPassed.png)
 
 > [!WARNING]
 > Los tests no son infalibles, y en la mayoría de los casos son escritos por el mismo desarrollador que diseñó el contrato, lo que significa que pueden estar sesgados.
