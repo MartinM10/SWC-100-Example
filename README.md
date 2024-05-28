@@ -14,6 +14,7 @@
 - [Pruebas y Seguridad](#pruebas-y-seguridad-)
   - [Casos de Prueba](#casos-de-prueba-)
 - [Vulnerabilidad Intencional](#vulnerabilidad-intencional-)
+  - [Proof Of Concept](#proof-of-concept) 
 - [Posible Solución](#posible-solución-)
 - [Conclusión](#conclusión)
 - [Agradecimientos](#agradecimientos)
@@ -325,13 +326,13 @@ function _sendPrize(address payable _winner, uint256 _prize) public {
 }
 ```
 
-### Proof of Concept
+### Proof of Concept 🥷
 
 Para este repositorio se ha desarrollado un Smart Contract como prueba de concepto para explotar la vulnerabilidad mencionada anteriormente. La idea es simular a través de un test similar a los vistos en [los casos de prueba](#casos-de-prueba-), que un atacante se aprovecha de este posible fallo de seguridad y consigue drenar los fondos de contrato.
 
 El contrato [ProofOfConcept.t.sol](/test/ProofOfConcept.t.sol) tiene todo lo necesario para llevar ejecutar el exploit.
 
-> Para ejecutar el exploit debes usar el siguiente comando
+Para ejecutar el exploit debes usar el siguiente comando
 
 ```shell
 forge test --match-contract ProofOfConcept -vvv
@@ -343,8 +344,8 @@ Tras la ejecución del comando deberías ver algo como esto:
 
 ![ExploitImage](/resources/ExploitLottery.png)
 
-> Donde se puede observar que:
->
+Donde se puede observar que:
+
 > - Inicialmente se hacen 5 compras de tickets por 1 ether desde 5 cuentas diferentes. Por lo tanto el contrato tiene en su balance 5 ethers.
 > - Por otro lado el atacante tiene 1 ether.
 > - Tras ejecutar el exploit el atacante tiene un balance de 6 ether y el contrato se ha quedado con un balance de 0, es decir, el atacante ha logrado robar todos los fondos del contrato. 👤💰
