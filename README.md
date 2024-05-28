@@ -346,9 +346,11 @@ Tras la ejecución del comando deberías ver algo como esto:
 
 > Donde se puede observar que:
 >
-> - Inicialmente se hacen 5 compras de tickets por 1 ether desde 5 cuentas diferentes. Por lo tanto el contrato tiene en su balance 5 ethers.
-> - Por otro lado el atacante tiene 1 ether.
-> - Tras ejecutar el exploit el atacante tiene un balance de 6 ether y el contrato se ha quedado con un balance de 0, es decir, el atacante ha logrado robar todos los fondos del contrato. 👤💰
+> - Inicialmente:
+>   - Se hacen 5 compras de tickets por 1 ether desde 5 cuentas diferentes. Por lo tanto el contrato tiene en su balance 5 ethers.
+>   - El atacante tiene 1 ether.
+> - Tras ejecutar el exploit:
+>   - El atacante tiene un balance de 6 ether y el contrato se ha quedado con un balance de 0, es decir, el atacante ha logrado robar todos los fondos del contrato. 👤💰
 
 ## Posible solución ✍️
 
