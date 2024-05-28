@@ -325,6 +325,30 @@ function _sendPrize(address payable _winner, uint256 _prize) public {
 }
 ```
 
+### Proof of Concept
+
+Para este repositorio se ha desarrollado un Smart Contract como prueba de concepto para explotar la vulnerabilidad mencionada anteriormente. La idea es simular a través de un test similar a los vistos en [los casos de prueba](#casos-de-prueba-), que un atacante se aprovecha de este posible fallo de seguridad y consigue drenar los fondos de contrato.
+
+El contrato [ProofOfConcept.t.sol](/test/ProofOfConcept.t.sol) tiene todo lo necesario para llevar ejecutar el exploit.
+
+> Para ejecutar el exploit debes usar el siguiente comando
+
+```shell
+forge test --match-contract ProofOfConcept -vvv
+```
+
+> El argumento `--match-contract` nos permite indicar que solo queremos ejecutar el contrato `ProofOfConcept` y el argumento `-vvv` nos activa el modo `verbose` en la ejecución de `forge test`, de esta manera nos dará las trazas con más información para saber por dónde va la ejecución y qué está ocurriendo con más detalle.
+
+Tras la ejecución del comando deberías ver algo como esto:
+
+![ExploitImage](/resources/ExploitLottery.png)
+
+> Donde se puede observar que:
+>
+> - Inicialmente se hacen 5 compras de tickets por 1 ether desde 5 cuentas diferentes. Por lo tanto el contrato tiene en su balance 5 ethers.
+> - Por otro lado el atacante tiene 1 ether.
+> - Tras ejecutar el exploit el atacante tiene un balance de 6 ether y el contrato se ha quedado con un balance de 0, es decir, el atacante ha logrado robar todos los fondos del contrato. 👤💰
+
 ## Posible solución ✍️
 
 Si analizamos el código detenidamente podemos observar que esta función se llama desde otra función endLottery. Además hay una pequeña pista que se ha introducido en el código que es el nombre de la función `_sendPrize`, nombre que comienza por `_`. Esto nos debería indicar que se trata de una función `internal`. Esta sería una posible solución a esa posible explotación, indicar que la función debe ser `internal`. Esto implicaría que esta función solo puede ser llamada desde dentro del contrato por otra función, e impidiendo que sea llamada y se ejecute desde fuera del contrato.  
@@ -334,9 +358,11 @@ En este repositorio se proporciona el código del smart contract con la posible 
 > Además, sería recomendable crear un mecanismo de control de acceso para esta función si es necesario, como permitir que solo el propietario del contrato la llame.
 
 ## Conclusión
+
 El objetivo principal de este repositorio ha sido mostrar una posible vulnerabilidad en Smart Contracts, concreamente generar un ejemplo para la vulnerabilidad [SWC-100](https://swcregistry.io/docs/SWC-100/) con fines educativos. Es importante este tipo de actividades para atraer desarolladores del mundo web2 y remarcarles que deben tener precaución a la hora de desarrollar smart contracts, ya que un simple despiste puede provocar una gran pérdida de fondos o totalidad de los mismos.
 
 En resumen:
+
 - Hemos estudiado el contrato inteligente.
 - Lo hemos analizado en busca de vulnerabilidades, y hemos encontrado una.
 - Hemos realizado un ataque para comprobar que la vulnerabilidad es real.
