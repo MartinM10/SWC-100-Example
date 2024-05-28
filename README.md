@@ -334,7 +334,9 @@ En este repositorio se proporciona el código del smart contract con la posible 
 > Además, sería recomendable crear un mecanismo de control de acceso para esta función si es necesario, como permitir que solo el propietario del contrato la llame.
 
 ## Conclusión
+El objetivo principal de este repositorio ha sido mostrar una posible vulnerabilidad en Smart Contracts, concreamente generar un ejemplo para la vulnerabilidad [SWC-100](https://swcregistry.io/docs/SWC-100/) con fines educativos. Es importante este tipo de actividades para atraer desarolladores del mundo web2 y remarcarles que deben tener precaución a la hora de desarrollar smart contracts, ya que un simple despiste puede provocar una gran pérdida de fondos o totalidad de los mismos.
 
+En resumen:
 - Hemos estudiado el contrato inteligente.
 - Lo hemos analizado en busca de vulnerabilidades, y hemos encontrado una.
 - Hemos realizado un ataque para comprobar que la vulnerabilidad es real.
