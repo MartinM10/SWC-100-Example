@@ -3,21 +3,21 @@
 ## Tabla de Contenidos
 
 - [Introducción a la Seguridad en Web3 🛡️](#introducción-a-la-seguridad-en-web3-️)
-- [Requisitos](#requisitos-️)
+- [Requisitos 🛠️](#requisitos-️)
   - [IDE](#ide)
   - [Foundry](#foundry)
   - [Primeros Pasos](#primeros-pasos)
-- [Descripción del Smart Contract](#descripción-del-smart-contract-)
-  - [Estructura del Smart Contract](#estructura-del-smart-contract-️)
-  - [Explicación Detallada de las Funciones](#explicación-detallada-de-las-funciones-)
-  - [Diagrama del Smart Contract](#diagrama-del-smart-contract)
-- [Pruebas y Seguridad](#pruebas-y-seguridad-)
-  - [Casos de Prueba](#casos-de-prueba-)
-- [Vulnerabilidad Intencional](#vulnerabilidad-intencional-)
-  - [Proof Of Concept](#proof-of-concept) 
-- [Posible Solución](#posible-solución-)
-- [Conclusión](#conclusión)
-- [Agradecimientos](#agradecimientos)
+- [Descripción del Smart Contract 📜](#descripción-del-smart-contract-)
+  - [Estructura del Smart Contract 🏗️](#estructura-del-smart-contract-️)
+  - [Explicación Detallada de las Funciones 🔍](#explicación-detallada-de-las-funciones-)
+  - [Diagrama del Smart Contract 📎](#diagrama-del-smart-contract-)
+- [Pruebas y Seguridad 🧪](#pruebas-y-seguridad-)
+  - [Casos de Prueba 📑](#casos-de-prueba-)
+- [Vulnerabilidad Intencional 🚨](#vulnerabilidad-intencional-)
+- [Posible Solución ✍️](#posible-solución-️)
+  - [Proof Of Concept 🥷](#proof-of-concept-)
+- [Conclusión 💭](#conclusión-)
+- [Agradecimientos 🧾](#agradecimientos-)
 
 ## Introducción a la Seguridad en Web3 🛡️
 
@@ -210,7 +210,7 @@ function endLottery(uint256 _lotteryId) external onlyOwner lotteryActive(_lotter
   - onlyOwner: Asegura que solo el propietario del contrato puede finalizar una lotería. ✅
   - lotteryActive: Asegura que la lotería está activa. ✅
 
-### Diagrama del Smart Contract
+### Diagrama del Smart Contract 📎
 
 A continuación se muestra un diagrama que muestra el funcionamiento más destacable del smart contract de manera visual. Generado con [draw.io](https://app.diagrams.net/)
 
@@ -332,7 +332,7 @@ Para este repositorio se ha desarrollado un Smart Contract como prueba de concep
 
 El contrato [ProofOfConcept.t.sol](/test/ProofOfConcept.t.sol) tiene todo lo necesario para llevar ejecutar el exploit.
 
-Para ejecutar el exploit debes usar el siguiente comando
+> Para ejecutar el exploit debes usar el siguiente comando
 
 ```shell
 forge test --match-contract ProofOfConcept -vvv
@@ -344,8 +344,8 @@ Tras la ejecución del comando deberías ver algo como esto:
 
 ![ExploitImage](/resources/ExploitLottery.png)
 
-Donde se puede observar que:
-
+> Donde se puede observar que:
+>
 > - Inicialmente se hacen 5 compras de tickets por 1 ether desde 5 cuentas diferentes. Por lo tanto el contrato tiene en su balance 5 ethers.
 > - Por otro lado el atacante tiene 1 ether.
 > - Tras ejecutar el exploit el atacante tiene un balance de 6 ether y el contrato se ha quedado con un balance de 0, es decir, el atacante ha logrado robar todos los fondos del contrato. 👤💰
@@ -358,7 +358,7 @@ En este repositorio se proporciona el código del smart contract con la posible 
 > [!TIP]
 > Además, sería recomendable crear un mecanismo de control de acceso para esta función si es necesario, como permitir que solo el propietario del contrato la llame.
 
-## Conclusión
+## Conclusión 💭
 
 El objetivo principal de este repositorio ha sido mostrar una posible vulnerabilidad en Smart Contracts, concreamente generar un ejemplo para la vulnerabilidad [SWC-100](https://swcregistry.io/docs/SWC-100/) con fines educativos. Es importante este tipo de actividades para atraer desarolladores del mundo web2 y remarcarles que deben tener precaución a la hora de desarrollar smart contracts, ya que un simple despiste puede provocar una gran pérdida de fondos o totalidad de los mismos.
 
@@ -372,7 +372,7 @@ Este es el proceso que sigue un auditor de contratos inteligentes. Interpreta y 
 
 Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tienes cualquier duda o sugerencia, no dudes en abrir un issue en el repositorio.
 
-## Agradecimientos
+## Agradecimientos 🧾
 
 Quiero agradecer a por los conocimientos que me proporcionaron y por la plantilla de guía que me brindaron en el repositorio [HackerWeekX-Web3-workshop](https://github.com/Marcolopeez/HackerWeekX-Web3-workshop.git)
 
