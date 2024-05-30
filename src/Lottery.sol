@@ -37,7 +37,7 @@ contract LotterySystem {
     }
 
     modifier lotteryActive(uint256 _lotteryId) {
-        require(lotteries[_lotteryId].isActive, "Lottery is not active");
+        require(lotteries[_lotteryId].isActive, "Lottery is still active");
         _;
     }
 
@@ -78,10 +78,6 @@ contract LotterySystem {
         onlyOneTicketPerAccount(_lotteryId)
     {
         require(
-            !lotteries[_lotteryId].hasTicket[msg.sender],
-            "Only one ticket per account allowed"
-        );
-        require(
             msg.value == lotteries[_lotteryId].ticketPrice,
             "Incorrect ticket price"
         );
@@ -103,7 +99,7 @@ contract LotterySystem {
         Lottery storage lottery = lotteries[_lotteryId];
         require(
             block.timestamp >= lottery.lotteryEndTime,
-            "Lottery is still active"
+            "Lottery duration has not elapsed"
         );
         require(lottery.players.length > 0, "No players in the lottery");
 
