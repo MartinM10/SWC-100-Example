@@ -130,7 +130,8 @@ A continuación se muestra una visión general del contrato [`Lottery.sol`](src/
    - `lotteryCount`: Contador del número de loterías.
    - `LOTTERY_DURATION`: Duración de cada lotería.
    - `Lottery` struct: Contiene los detalles de cada lotería (ID, jugadores, precio del boleto, tiempo de finalización, bote acumulado, estado activo, y `hasTicket`).
-   -  `lotteries` mapping: Diccionario que contiene todas las loterías. Devuelve la `Lottery` (struct) que se le indica en la clave (uint256).
+   - `lotteries` mapping: Diccionario que contiene todas las loterías. Devuelve la `Lottery` (struct) que se le indica en la clave (uint256).
+
 2. **Funciones**:
    - `startLottery(uint256 _ticketPrice)`: Inicia una nueva lotería.
    - `buyTicket(uint256 _lotteryId)`: Permite a un participante comprar un boleto para una lotería específica.
@@ -169,15 +170,14 @@ function startLottery(uint256 _ticketPrice) external onlyOwner {
 
 ```solidity
 function buyTicket(uint256 _lotteryId) external payable lotteryActive(_lotteryId) onlyOneTicketPerAccount(_lotteryId) {
-        require(!lotteries[_lotteryId].hasTicket[msg.sender], "Only one ticket per account allowed");
-        require(msg.value == lotteries[_lotteryId].ticketPrice, "Incorrect ticket price");
-        Lottery storage lottery = lotteries[_lotteryId];
-        lottery.players.push(payable(msg.sender));
-        lottery.prizePool += msg.value;
-        lottery.hasTicket[msg.sender] = true;
+    require(msg.value == lotteries[_lotteryId].ticketPrice, "Incorrect ticket price");
+    Lottery storage lottery = lotteries[_lotteryId];
+    lottery.players.push(payable(msg.sender));
+    lottery.prizePool += msg.value;
+    lottery.hasTicket[msg.sender] = true;
 
-        emit TicketPurchased(_lotteryId, msg.sender, msg.value);
-    }
+    emit TicketPurchased(_lotteryId, msg.sender, msg.value);
+}
 ```
 
 - Propósito: Permite a los usuarios comprar un boleto para una lotería específica. ✅
@@ -190,7 +190,7 @@ function buyTicket(uint256 _lotteryId) external payable lotteryActive(_lotteryId
 ```solidity
 function endLottery(uint256 _lotteryId) external onlyOwner lotteryActive(_lotteryId) {
     Lottery storage lottery = lotteries[_lotteryId];
-    require(block.timestamp >= lottery.lotteryEndTime, "Lottery is still active");
+    require(block.timestamp >= lottery.lotteryEndTime, "Lottery duration has not elapsed");
     require(lottery.players.length > 0, "No players in the lottery");
 
     lottery.isActive = false;
@@ -238,77 +238,114 @@ Tras ejecutar el comando deberías ver que todos los tests se han pasado correct
 
 En el contrato [`Lottery.t.sol`](test/Lottery.t.sol) tienes algunos casos de prueba importantes para asegurarte de que el contrato funciona correctamente:
 
-1. **testStartLottery**: Verifica que una nueva lotería se inicie correctamente.
-2. **testBuyTicket**: Verifica que un usuario pueda comprar un boleto correctamente.
-3. **testEndLottery**: Verifica que una lotería pueda finalizar correctamente y un ganador sea seleccionado.
-4. **testOneTicketPerAccount**: Asegura que un usuario no pueda comprar más de un boleto por lotería.
-5. **testMultipleLotteries**: Verifica que múltiples loterías puedan funcionar simultáneamente.
+1. **testMultiUserTicketPurchase**: Inicia una lotería, realiza 1 compra de tickets desde 3 cuentas diferentes (1 ticket por cuenta), y comprueba que el balance del contrato es correcto.
+2. **testMultiUserLotteryEnd**: Simula una lotería desde el inicio hasta el final, realizando la compra de 1 ticket desde 3 cuentas diferentes.
+3. **testMultiUserOneTicketPerAccount**: Verifica que una lotería solo permita 1 ticket por cuenta.
 
 ```solidity
-function testStartLottery() public {
-    lottery.startLottery(1 ether);
-    (uint256 ticketPrice, , , bool isActive) = lottery.getLotteryInfo(1);
-    assertEq(ticketPrice, 1 ether);
-    assertTrue(isActive);
-}
-
-function testBuyTicket() public {
+function testMultiUserTicketPurchase() public {
     lottery.startLottery(1 ether);
 
+    // User1 buys a ticket
     vm.startPrank(user1);
     lottery.buyTicket{value: 1 ether}(1);
     vm.stopPrank();
 
-    (uint256 ticketPrice, , uint256 prizePool, ) = lottery.getLotteryInfo(1);
-    assertEq(ticketPrice, 1 ether);
-    assertEq(prizePool, 1 ether);
-}
+    // User2 buys a ticket
+    vm.startPrank(user2);
+    lottery.buyTicket{value: 1 ether}(1);
+    vm.stopPrank();
 
-function testEndLottery() public {
+    // User3 buys a ticket
+    vm.startPrank(user3);
+    lottery.buyTicket{value: 1 ether}(1);
+    vm.stopPrank();
+
+    (, , uint256 prizePool, ) = lottery.getLotteryInfo(1);
+    assertEq(
+        prizePool,
+        3 ether,
+        "Prize pool should be 3 ether after three tickets purchased"
+    );
+    console.log(
+        "Multi-user ticket purchase simulated successfully, prize pool:",
+        prizePool
+    );
+
+    // Check contract balance
+    uint256 contractBalance = lottery.getContractBalance();
+    assertEq(
+        contractBalance,
+        3 ether,
+        "Contract balance should be 3 ether after ticket purchases"
+    );
+    console.log("Contract balance is correct:", contractBalance);
+  }
+
+  function testMultiUserLotteryEnd() public {
     lottery.startLottery(1 ether);
 
+    // Users buy tickets
     vm.startPrank(user1);
     lottery.buyTicket{value: 1 ether}(1);
     vm.stopPrank();
 
-    vm.warp(block.timestamp + 1 minutes);
+    vm.startPrank(user2);
+    lottery.buyTicket{value: 1 ether}(1);
+    vm.stopPrank();
 
+    vm.startPrank(user3);
+    lottery.buyTicket{value: 1 ether}(1);
+    vm.stopPrank();
+
+    // Skip forward in time to simulate end of lottery
+    vm.warp(block.timestamp + 15 minutes);
+
+    // End the lottery
     lottery.endLottery(1);
 
-    ( , , , bool isActive) = lottery.getLotteryInfo(1);
-    assertFalse(isActive);
-}
+    (, , uint256 prizePool, bool isActive) = lottery.getLotteryInfo(1);
 
-function testOneTicketPerAccount() public {
+    assertFalse(isActive, "Lottery should be inactive after ending");
+    assertEq(prizePool, 0, "Prize pool should be reset to 0 after ending");
+    console.log("Multi-user lottery end simulated successfully");
+  }
+
+  function testMultiUserOneTicketPerAccount() public {
     lottery.startLottery(1 ether);
 
+    // User1 buys a ticket
     vm.startPrank(user1);
     lottery.buyTicket{value: 1 ether}(1);
+
     vm.expectRevert("Only one ticket per account allowed");
     lottery.buyTicket{value: 1 ether}(1);
     vm.stopPrank();
-}
+    console.log(
+        "Verified only one ticket per account restriction for user1"
+    );
 
-function testMultipleLotteries() public {
-    lottery.startLottery(1 ether);
-    lottery.startLottery(0.5 ether);
+    // User2 buys a ticket
+    vm.startPrank(user2);
+    lottery.buyTicket{value: 1 ether}(1);
 
-    (uint256 ticketPrice1, , , ) = lottery.getLotteryInfo(1);
-    (uint256 ticketPrice2, , , ) = lottery.getLotteryInfo(2);
-
-    assertEq(ticketPrice1, 1 ether);
-    assertEq(ticketPrice2, 0.5 ether);
-}
-
-function testVulnerability() public {
-    lottery.startLottery(1 ether);
-
-    vm.startPrank(user1);
+    vm.expectRevert("Only one ticket per account allowed");
     lottery.buyTicket{value: 1 ether}(1);
     vm.stopPrank();
+    console.log(
+        "Verified only one ticket per account restriction for user2"
+    );
 
-    lottery._sendPrize(payable(user2), 1 ether);
-    assertEq(user2.balance, 11 ether, "User2 should have received the prize");
+    // User3 buys a ticket
+    vm.startPrank(user3);
+    lottery.buyTicket{value: 1 ether}(1);
+
+    vm.expectRevert("Only one ticket per account allowed");
+    lottery.buyTicket{value: 1 ether}(1);
+    vm.stopPrank();
+    console.log(
+        "Verified only one ticket per account restriction for user3"
+    );
 }
 ```
 
