@@ -415,7 +415,9 @@ Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tie
 
 > [!WARNING]
 > Existe otra vulnerabilidad en el contrato que no te he mencionado, a ver si eres capaz de localizarla 🕵️. Te dejo dos enlaces como pistas
-> [pista1](https://swcregistry.io/docs/SWC-120/) 👁️
+>
+>  [pista1](https://swcregistry.io/docs/SWC-120/) 👁️
+> 
 > [pista2](https://chain.link/vrf) 👁️
 
 ## Agradecimientos 🧾
