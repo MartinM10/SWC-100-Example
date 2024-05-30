@@ -413,6 +413,11 @@ Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tie
 
 [VulnerableRenewableEnergy](https://github.com/MartinM10/VulnerableRenewableEnergy)
 
+> [!WARNING]
+> Existe otra vulnerabilidad en el contrato que no te he mencionado, a ver si eres capaz de localizarla 🕵️. Te dejo dos enlaces como pistas
+> [pista1](https://swcregistry.io/docs/SWC-120/) 👁️
+> [pista2](https://chain.link/vrf) 👁️
+
 ## Agradecimientos 🧾
 
 Quiero agradecer a por los conocimientos que me proporcionaron y por la plantilla de guía que me brindaron en el repositorio [HackerWeekX-Web3-workshop](https://github.com/Marcolopeez/HackerWeekX-Web3-workshop.git)
