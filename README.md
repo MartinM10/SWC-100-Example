@@ -130,7 +130,7 @@ A continuación se muestra una visión general del contrato [`Lottery.sol`](src/
    - `lotteryCount`: Contador del número de loterías.
    - `LOTTERY_DURATION`: Duración de cada lotería.
    - `Lottery` struct: Contiene los detalles de cada lotería (ID, jugadores, precio del boleto, tiempo de finalización, bote acumulado, estado activo, y `hasTicket`).
-
+   -  `lotteries mapping`: Diccionario que contiene todas las loterías. Devuelve la `Lottery` (struct) que se le indica en la clave (uint256).
 2. **Funciones**:
    - `startLottery(uint256 _ticketPrice)`: Inicia una nueva lotería.
    - `buyTicket(uint256 _lotteryId)`: Permite a un participante comprar un boleto para una lotería específica.
