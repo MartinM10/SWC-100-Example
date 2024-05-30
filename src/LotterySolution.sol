@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 contract LotterySystem {
     address public owner;
     uint256 public lotteryCount;
-    uint256 public constant LOTTERY_DURATION = 1 minutes; // Duración de la lotería en segundos
+    uint256 public constant LOTTERY_DURATION = 15 minutes; // Duración de la lotería en segundos
 
     struct Lottery {
         uint256 lotteryId;
