@@ -94,10 +94,10 @@ Lo primero que vamos a hacer es clonar el repositorio del taller. Para ello, abr
 
 ```shell
 # Clonamos el repo:
-https://github.com/MartinM10/SWC-100-Example.git
+https://github.com/MartinM10/VulnerableLottery.git
 
 # Abrimos la carpeta creada
-cd SWC-100-Example
+cd VulnerableLottery
 ```
 
 A continuación instalaremos las dependencias y compilaremos el proyecto para comprobar que todo está correcto.
