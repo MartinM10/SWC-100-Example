@@ -374,7 +374,7 @@ Este es el proceso que sigue un auditor de contratos inteligentes. Interpreta y 
 
 Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tienes cualquier duda o sugerencia, no dudes en abrir un issue en el repositorio. Si quieres ver otra vulnerabilidad te dejo otro repositorio desarrollado con el mismo fin y siguiendo la misma metodología.
 
-[SWC-128-EXAMPLE](https://github.com/MartinM10/SWC-128-Example)
+[VulnerableRenewableEnergy](https://github.com/MartinM10/VulnerableRenewableEnergy)
 
 ## Agradecimientos 🧾
 
