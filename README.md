@@ -214,7 +214,7 @@ function endLottery(uint256 _lotteryId) external onlyOwner lotteryActive(_lotter
 
 A continuación se muestra un diagrama que muestra el funcionamiento más destacable del smart contract de manera visual. Generado con [draw.io](https://app.diagrams.net/)
 
-![Diagrama_01](/resources/LotteryDiagram.png)
+![Diagrama_01](/resources/LotteryDiagram.svg)
 
 ## Pruebas y Seguridad 🧪
 
