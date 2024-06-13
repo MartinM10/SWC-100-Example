@@ -409,20 +409,25 @@ En resumen:
 
 Este es el proceso que sigue un auditor de contratos inteligentes. Interpreta y analiza el contrato en busca de vulnerabilidades, y si encuentra alguna, realiza una prueba de concepto para comprobar que es real.
 
-Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tienes cualquier duda o sugerencia, no dudes en abrir un issue en el repositorio. Si quieres ver otra vulnerabilidad te dejo otro repositorio desarrollado con el mismo fin y siguiendo la misma metodología.
+Espero que hayas disfrutado del taller, y que hayas aprendido algo nuevo. Si tienes cualquier duda o sugerencia, no dudes en abrir un issue en el repositorio. Si quieres ver otras vulnerabilidades, te dejo otros repositorios desarrollados con el mismo fin y siguiendo la misma metodología.
 
-[VulnerableRenewableEnergy](https://github.com/MartinM10/VulnerableRenewableEnergy)
+Repositorio de [@MartinM10](https://github.com/MartinM10) 🧑‍💻
+
+- [VulnerableRenewableEnergy](https://github.com/MartinM10/VulnerableRenewableEnergy)
+
+Repositorios de [@ManuelBD145](https://github.com/ManuelBD145) 🧑‍💻
+
+- [VulnerableDailyLimitWallet](https://github.com/ManuelBD145/Fondos)
+- [VulnerableBank](https://github.com/ManuelBD145/Bank)
 
 > [!WARNING]
 > Existe otra vulnerabilidad en el contrato que no te he mencionado, a ver si eres capaz de localizarla 🕵️. Te dejo dos enlaces como pistas
->
->  [pista1](https://swcregistry.io/docs/SWC-120/) 👁️
-> 
+> [pista1](https://swcregistry.io/docs/SWC-120/) 👁️
 > [pista2](https://chain.link/vrf) 👁️
 
 ## Agradecimientos 🧾
 
 Quiero agradecer a por los conocimientos que me proporcionaron y por la plantilla de guía que me brindaron en el repositorio [HackerWeekX-Web3-workshop](https://github.com/Marcolopeez/HackerWeekX-Web3-workshop.git)
 
-- 🦸 @Marcolopeez 📖 [Perfil de Github](https://github.com/Marcolopeez)
-- 🦸 @jcsec-security 📖 [Perfil de Github](https://github.com/jcsec-security)
+- 🦸 [@Marcolopeez](https://github.com/Marcolopeez)
+- 🦸 [@jcsec-security](https://github.com/jcsec-security)
